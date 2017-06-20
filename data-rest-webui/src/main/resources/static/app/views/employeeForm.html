@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{employee.id ? 'Edit':'Add'}}</h3>
+</div>
+<form name="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" class="form-control" placeholder="First Name"
+                   ng-model="employee.firstName" required/>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" class="form-control" placeholder="First Name"
+                   ng-model="employee.lastName" required/>
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth date</label>
+            <p class="input-group">
+                <input type="text" id="birthDate" class="form-control" placeholder="Birth date"
+                       uib-datepicker-popup="dd MMMM, yyyy"
+                       is-open="popup.birthdate"
+                       ng-model="employee.birthDate" required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open('birthdate')">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="hireDate">Hire date</label>
+            <p class="input-group">
+                <input type="text" id="hireDate" class="form-control" placeholder="Hire date"
+                       uib-datepicker-popup="dd MMMM, yyyy"
+                       is-open="popup.hiredate"
+                       ng-model="employee.hireDate" required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open('hiredate')">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" class="form-control" ng-model="employee.gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="form.$invalid">
+            Save changes
+        </button>
+        <button type="button" class="btn btn-secondary" ng-click="cancel()">Close</button>
+    </div>
+</form>

@@ -1,0 +1,42 @@
+group 'com.brainacademy.web'
+version '1.0-SNAPSHOT'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+springBoot {
+  mainClass = 'com.brainacademy.web.WebApplication'
+}
+
+dependencies {
+
+  compile "org.springframework.boot:spring-boot-starter-web"
+  runtime "org.springframework.boot:spring-boot-starter-tomcat"
+
+  compile "org.springframework:spring-webmvc"
+
+  compile 'org.hibernate:hibernate-core:5.2.10.Final'
+  compile "org.hibernate:hibernate-entitymanager:5.2.10.Final"
+  compile 'mysql:mysql-connector-java:6.0.5'
+
+  compile project(':data-model')
+  compile project(':data-rest-webui')
+
+  testCompile group: 'junit', name: 'junit', version: '4.12'
+}
