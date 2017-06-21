@@ -1,7 +1,7 @@
 package com.brainacademy.web;
 
 
-import com.brainacademy.web.config.DatabaseConfig;
+import com.brainacademy.data.config.DatabaseConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.text.SimpleDateFormat;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.brainacademy.web")
+@ComponentScan(basePackages = {"com.brainacademy.web", "com.brainacademy.data"})
 @Import({DatabaseConfig.class})
 public class WebApplication
         extends WebMvcConfigurerAdapter {

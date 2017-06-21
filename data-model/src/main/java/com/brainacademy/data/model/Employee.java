@@ -1,16 +1,17 @@
-package com.brainacademy.web.model;
+package com.brainacademy.data.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,11 +36,9 @@ public class Employee {
     @Column(name = "hire_date")
     private Date hireDate;
 
-    @ManyToMany
-    @JoinTable(name = "dept_emp",
-        joinColumns = @JoinColumn(name = "emp_no", referencedColumnName = "emp_no"),
-        inverseJoinColumns = @JoinColumn(name="dept_no", referencedColumnName = "dept_no"))
-    private List<Department> departments;
+    @OneToMany(mappedBy = "primaryKey.employee")
+    @JsonIgnore
+    private Set<DepartmentEmployee> departmentEmployees = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -87,5 +86,17 @@ public class Employee {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public Set<DepartmentEmployee> getDepartmentEmployees() {
+        return departmentEmployees;
+    }
+
+    public void setDepartmentEmployees(Set<DepartmentEmployee> departmentEmployees) {
+        this.departmentEmployees = departmentEmployees;
+    }
+
+    public void addDepartmentEmploee(DepartmentEmployee departmentEmployee) {
+        departmentEmployees.add(departmentEmployee);
     }
 }

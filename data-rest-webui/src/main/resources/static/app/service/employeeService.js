@@ -1,7 +1,7 @@
 (function(){
     var employeeService = function($http, $q, config){
         var FIND_EMPLOYEE_ENDPOINT = config.API_HOST + "/employee?departmentNumber=#depNo#&employeeName=#name#&page=#page#",
-            SAVE_EMPLOYEE_ENDPOINT = config.API_HOST + "/employee",
+            SAVE_EMPLOYEE_ENDPOINT = config.API_HOST + "/employee/department/#number#",
             EMPLOYEE_ENDPOINT = config.API_HOST + "/employee/#id#";
 
         function reject(error) {
@@ -24,8 +24,9 @@
                 });
             },
 
-            save: function(employee) {
-                return $http.post(SAVE_EMPLOYEE_ENDPOINT, angular.toJson(employee))
+            save: function(department, employee) {
+                var url = SAVE_EMPLOYEE_ENDPOINT.replace("#number#", department.number);
+                return $http.post(url, angular.toJson(employee))
                     .then(function(response) {
                         return response.data;
                     }, function(error) {

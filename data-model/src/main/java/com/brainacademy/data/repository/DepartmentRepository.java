@@ -1,7 +1,6 @@
-package com.brainacademy.web.repository;
+package com.brainacademy.data.repository;
 
-
-import com.brainacademy.web.model.Department;
+import com.brainacademy.data.model.Department;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

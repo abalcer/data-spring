@@ -1,7 +1,7 @@
-package com.brainacademy.web.service;
+package com.brainacademy.data.service;
 
-import com.brainacademy.web.model.Department;
-import com.brainacademy.web.model.Employee;
+import com.brainacademy.data.model.Department;
+import com.brainacademy.data.model.Employee;
 
 import org.springframework.data.domain.Pageable;
 
@@ -16,5 +16,6 @@ public interface EmployeeService {
 
     Employee save(Employee employee);
 
+    Employee save(Employee employee, Department department);
     void delete(Employee employee);
 }

@@ -2,4 +2,5 @@ rootProject.name = 'data'
 include 'data-model'
 include 'data-rest-backend'
 include 'data-rest-webui'
+include 'data-swing-ui'
 

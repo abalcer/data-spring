@@ -1,11 +1,10 @@
-package com.brainacademy.web.config;
+package com.brainacademy.data.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,38 +20,19 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("com.brainacademy.web.repository")
+@PropertySource("classpath:database.properties")
+@EnableJpaRepositories("com.brainacademy.data.repository")
 public class DatabaseConfig {
 
-    @Value("${database.url}")
-    private String databaseUrl;
+    @Autowired
+    private DataSource dataSource;
 
-    @Value("${database.user}")
-    private String user;
-
-    @Value("${database.password}")
-    private String password;
-
-    @Value("${database.driver}")
-    private String driver;
-
-
-    @Bean
-    public DataSource dataSource() {
-        return DataSourceBuilder.create()
-                .driverClassName(driver)
-                .url(databaseUrl)
-                .username(user)
-                .password(password)
-                .type(DriverManagerDataSource.class)
-                .build();
-    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan("com.brainacademy.web.model");
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("com.brainacademy.data.model");
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(jpaVendorAdapter);

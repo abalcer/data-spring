@@ -1,8 +1,7 @@
 package com.brainacademy.web.controller;
 
-
-import com.brainacademy.web.model.Department;
-import com.brainacademy.web.service.EmployeeService;
+import com.brainacademy.data.model.Department;
+import com.brainacademy.data.service.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

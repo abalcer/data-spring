@@ -1,8 +1,10 @@
 package com.brainacademy.web.controller;
 
 
-import com.brainacademy.web.model.Employee;
-import com.brainacademy.web.service.EmployeeService;
+import com.brainacademy.data.model.Department;
+import com.brainacademy.data.model.Employee;
+import com.brainacademy.data.service.DepartmentService;
+import com.brainacademy.data.service.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private DepartmentService departmentService;
+
+
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<Employee> findEmployees(
             @RequestParam(name = "departmentNumber") String departmentNumber,
@@ -42,8 +48,8 @@ public class EmployeeController {
         return employee;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Employee save(@RequestBody Employee employeeParam) {
+    @RequestMapping(path = "/department/{departmentNumber}", method = RequestMethod.POST)
+    public Employee save(@PathVariable String departmentNumber, @RequestBody Employee employeeParam) {
         if (employeeParam.getId() != null) {
             Employee employee = employeeService.findById(employeeParam.getId());
             if (employee == null) {
@@ -57,7 +63,12 @@ public class EmployeeController {
             employee.setGender(employeeParam.getGender());
             return employeeService.save(employee);
         } else {
-            return employeeService.save(employeeParam);
+            Department department = departmentService.getByNumber(departmentNumber);
+            if (department == null) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+            }
+
+            return employeeService.save(employeeParam, department);
         }
     }
 }

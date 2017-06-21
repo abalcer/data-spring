@@ -59,7 +59,7 @@
                     'employee': angular.copy(employee)
                 }
             }).result.then(function(employee) {
-                employeeService.save(employee).then(function(data) {
+                employeeService.save($scope.department, employee).then(function(data) {
                     refresh();
                     $scope.alerts.push({type: 'success', msg: 'Employee saved successfully'});
                 }, function(error) {

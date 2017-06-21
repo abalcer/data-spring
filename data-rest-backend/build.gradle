@@ -2,21 +2,22 @@ group 'com.brainacademy.web'
 version '1.0-SNAPSHOT'
 
 buildscript {
-  repositories {
-    mavenCentral()
-  }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    classpath('com.google.appengine:gradle-appengine-plugin:+')
   }
 }
 
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'appengine'
 apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 
 repositories {
+  maven {
+    url 'https://maven-central.storage.googleapis.com'
+  }
   mavenCentral()
 }
 
@@ -25,6 +26,9 @@ springBoot {
 }
 
 dependencies {
+  appengineSdk 'com.google.appengine:appengine-java-sdk:+'
+  compile 'com.google.appengine:appengine-api-1.0-sdk:+'
+  compile 'com.google.appengine:appengine:+'
 
   compile "org.springframework.boot:spring-boot-starter-web"
   runtime "org.springframework.boot:spring-boot-starter-tomcat"
@@ -35,8 +39,21 @@ dependencies {
   compile "org.hibernate:hibernate-entitymanager:5.2.10.Final"
   compile 'mysql:mysql-connector-java:6.0.5'
 
+  compile 'com.jmethods:catatumbo:1.4.0'
+  compile 'org.aspectj:aspectjrt:1.7.4'
+
   compile project(':data-model')
   compile project(':data-rest-webui')
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+appengine {
+  httpPort = 8090
+  downloadSdk = true
+  jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000']
+
+  appcfg {
+    oauth2 = true
+  }
 }
